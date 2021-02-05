@@ -91,3 +91,72 @@ int main(){
     return 0;
 }
 ~~~
+#### cout的使用
+
+可以用cout输出变量。
+
+cout可以输出指针和引用类型的数据。<b>地址符号&在等号右边表示取地址，&在左边表示引用,即两个变量指向同一个地址。</b>
+
+cout可以连续输出数据。
+
+~~~c++
+#include<iostream>
+
+using namespace std;
+
+int main(){
+
+    int a = 10,*p;
+    int &b = a;         //把a的值存储到b的地址中。× 将b的指针指向a
+    p = &a;             //把a的地址赋给p， 即p是a的地址
+    string s = "c++";   //让字符串s的值为c++
+    string* ps = &s;    //将s字符串的地址赋值给ps
+    
+    cout<<p<<endl;      //输出a的地址
+    cout<<b<<endl;      //输出b的值，因为与a指向同一地址， b的值为a的值
+    cout<<*p<<endl;     //输出指针的内容， 即a的值
+    cout<<ps<<endl;     //输出ps的地址
+    cout<<*ps<<endl;    //ps加了*表示取内容， 即输出s的值，即c++
+
+    return 0;
+}
+~~~
+
+## 2、精度、域宽、填充字符的设置
+
+要引入iomanip，#include<iomanip>
+
+|       操作符        |             功能              |
+| :-----------------: | :---------------------------: |
+|   setfill(char c)   |     设置以c表示的填充字符     |
+| setprecision(int n) |     设置以n表示的数值精度     |
+|     setw(int n)     | 设置以n表示的域宽(默认右对齐) |
+
+~~~c++
+#include<iostream>
+#include<iomanip>
+//用于设置精度、域宽等
+#include<cmath>
+
+using namespace std;
+
+int main(){
+
+    double b = sqrt(2.0);
+    for(int i = 0;i < 5;i++){
+        cout<<fixed;       //加了这句话能够按照小数点后作精度，否则会连小数点前
+        cout<<setprecision(i)<<b<<endl;
+    }
+    cout<<"当前的精度为"<<cout.precision()<<endl;
+    cout<<"当前的域宽为"<<cout.width()<<endl;
+    //cout<<left;   加了这句话会变成左对齐
+    cout<<setw(9)<<b<<b<<endl;  //域宽的设置要大于字符长度才能够有效果
+    cout<<"当前填充字符为"<<endl;
+
+    //只要在输出字符前，改变同一语句里的顺序对结果没有影响
+    cout<<setfill('*')<<setw(10)<<b<<endl;  //****1.4142
+    cout<<setw(10)<<setfill('*')<<b<<endl;  //****1.4142
+
+    return 0;
+}
+~~~
