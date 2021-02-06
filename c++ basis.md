@@ -160,3 +160,100 @@ int main(){
     return 0;
 }
 ~~~
+|   操作符   |             功能              |
+| :--------: | :---------------------------: |
+|    oct     |      八进制格式输出数据       |
+|    dec     |      十进制格式输出数据       |
+|    hex     |     十六进制格式输出数据      |
+|    endl    |  插入换行符并刷新输出缓冲流   |
+| uppercase  |    十六进制输出时字母大写     |
+|   skipws   |        输出时跳过空白         |
+|   flush    |            刷新流             |
+|    left    |            左对齐             |
+|   right    |            右对齐             |
+| scientific |        科学计数法输出         |
+|   fixed    |        定点数方式输出         |
+|  showbase  | 输出前缀(八进制0，十六进制0x) |
+| showpoint  |     输出浮点数时带小数点      |
+|  showpos   |        输出正整数时加+        |
+
+## 3、基本运算
+
+ 加、减、乘、除、取余。
+
+~~~c++
+//用于计算某个位数大于等于3的整数的个位数、十位数和百位数
+#include<iostream>
+#include<iomanip>
+//用于设置精度、域宽等
+#include<cmath>
+
+using namespace std;
+
+int main(){
+
+    int a;
+    cout<<"请输入一个整数"<<endl;
+    cin>>a;
+    
+    int ge, shi, bai;
+    ge = a % 10;
+    shi = a / 10 % 10;
+    bai = a / 100 % 10;
+    cout<<ge<<setw(2)<<shi<<setw(2)<<bai<<endl;
+
+    return 0;
+}
+~~~
+
+自增自减，加等于，减等于
+
+# 二、分支结构
+
+## 1、运算符
+
+算术运算符
+
+逻辑运算符
+
+与&&	或||	非！ 
+
+&&和||前面满足条件，后面就不会再检测了
+
+~~~~c++
+#include<iostream>
+using namespace std;
+int main(){
+    float score;
+    cin>>score;
+    //符合正态分布
+    if(score >= 70){
+        if(score < 80){
+            cout<<"成绩中等"<<endl;
+        }else if(score <90){
+            cout<<"成绩良好"<<endl;
+        }else{
+            cout<<"成绩优秀"<<endl;
+        }
+    }else{
+        if(score >= 60){
+            cout<<"成绩合格"<<endl;
+        }else{
+            cout<<"成绩不合格"<<endl;
+        }
+    }
+
+    return 0;
+}
+~~~~
+
+优先级
+
+&& 优先级高于 ||，！优先级高于所有关系运算和算术运算
+
+
+
+
+
+
+
