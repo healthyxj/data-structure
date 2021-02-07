@@ -254,6 +254,107 @@ int main(){
 
 
 
+# 三、循环结构
+
+## a、for、break、continue
+
+for语句
+
+for(i = 1; i <= n; i++){
+
+​	循环体
+
+}
+
+break能够<b>直接跳出所在的循环</b>。
+
+~~~c++
+#include<iostream>
+using namespace std;
+
+int main(){
+    int n;
+    cin>>n;
+
+    for(int i = n;i >= 1; i--){
+        if(i == 5) break;
+        cout<<i<<endl;
+    }
+    
+    return 0;
+}
+~~~
+
+
+
+~~~c++
+#include<iostream>
+using namespace std;
+
+int main(){
+    int n;
+    cin>>n;
+    long long pre1 = 1,pre2 = 1;
+    long long k = 0;
+
+    if(n == 1 || n ==2){
+        cout<<1<<endl;
+    }else{
+        for(int i = 3;i <= n;i++){
+            k = pre1 + pre2;
+            pre2 = pre1;
+            pre1 = k;
+        }
+    }
+    cout<<k<<endl;
+
+    return 0;
+}
+~~~
+
+continue跳出当前循环
+
+~~~c++
+#include<iostream>
+using namespace std;
+int main(){
+    int n;
+    cin>>n;
+    int i = 0;
+    while(i <= n){
+        i++;
+        if(i % 3 == 0){
+            continue;
+        }					//注意：循环更新和continue的顺序
+        cout<<i<<endl;
+    }
+    return 0; 
+}
+~~~
+
+
+
+## b、while、do while语句
+
+初始条件
+
+while(循环条件){
+
+循环体；循环更新；
+
+}
+
+do while{}; 至少执行一次
+
+### for、while的区别
+
+* for省略测试条件时，默认条件为true
+* for语句可以用初始化语句声明一个局部变量，while不可以
+* 循环体中包含continue，for语句跳到循环更新处，while直接跳到循环条件处
+* 无法预知循环次数时，用while语句
+
+
+
 
 
 
