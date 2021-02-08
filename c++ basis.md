@@ -353,6 +353,265 @@ do while{}; 至少执行一次
 * 循环体中包含continue，for语句跳到循环更新处，while直接跳到循环条件处
 * 无法预知循环次数时，用while语句
 
+# 四、函数
+
+函数是对实现某一功能的代码的模块化封装。
+
+函数包括：函数原型、定义和调用
+
+## 函数定义
+
+返回值类型 函数名（参数类型 参数名1，参数类型 参数名2，……）{
+
+执行语句;
+
+返回值;
+
+}
+
+如果没有返回值，则返回类型为void
+
+~~~c++
+//求两个数相加
+#include<iostream>
+using namespace std;
+
+int add(int a, int b);	//函数原型的声明，参数名称可以不写，但是要表明参数的类型
+
+int main(){
+    int n;
+    cin>>n;
+    int *C = new int[n];	//创建动态数组,int *C = new 类型[数组数目]
+    int a,b;
+
+    for(int i = 0;i < n;i++){
+        cin>>a>>b;
+        C[i] = add(a,b);	//函数调用
+    }
+    for(int i = 0;i < n;i++){
+        cout<<C[i]<<endl;
+    }
+
+    return 0;
+}
+
+int add(int a,int b){	//函数的定义
+    return a+b; 
+}
+~~~
+
+## 实例
+
+传值调用，使用指针
+
+1、交换两个给定的整数
+
+~~~c++
+//输入两个整数a，b，交换后输出
+#include<iostream>
+#include<iomanip>
+using namespace std;
+
+void swap1(int a, int b);
+void swap2(int &a, int &b);
+
+int main(){
+	int a,b;
+    cin>>a>>b;
+    
+    swap1(a,b);
+    cout<<a<<setw(2)<<b<<endl;
+    swap2(a,b);
+    cout<<a<<setw(2)<<b<<endl;
+    
+    return 0;
+}
+
+void swap1(int a, int b){	//传值参数,对函数外的结果没有改变
+    int temp;
+    temp = a;
+    a = b;
+    b = temp;
+}
+
+void swap2(int &a, int &b){	//引用参数,对函数外的结果有改变
+    int temp;
+    temp = a;
+    a = b;
+    b = temp;
+}
+~~~
+
+2、输入n个数存入到数组中，并求出这些数的和
+
+~~~c++
+#include<iostream>
+using namespace std;
+
+int a[1000];
+
+long long sum(int a[], int n);	//数组作为参数时，括号里不能有数字
+
+int main(){
+    int n;
+    cin>>n;
+    
+    for(int i = 0;i < n;i++){
+        cin>>a[i];
+    }
+    cout<<sum(a,n)<<endl;	//只要将数组的符号作为参数即可 sum(a[],n)×
+    
+    return 0;
+}
+
+long long sum(int a[], int n){
+    long long sum = 0;
+    for(int i = 0;i < n;i++){
+        sum += a[i];
+    }
+    return sum;
+}
+~~~
+
+3、输入n个字符，如果是小写的就转化为大写字母，并输出转化后的字符串
+
+~~~c++
+#include<iostream>
+#include<cstring>
+using namespace std;
+
+void convert1(string s){
+    for(int i = 0;i < s.length();i++){	//要读取字符串数组的长度，需要用cstring头文件
+        if(s[i] >= 'a' && s[i] <= 'z'){
+            s[i] -= 32;
+        }
+    }
+}
+
+void convert2(string &s){	//使用了引用参数
+    for(int i = 0;i < s.length();i++){	//注意是s.length()，括号少不了
+        if(s[i] >= 'a' && s[i] <= 'z'){
+            s[i] -= 32;
+        }
+    }
+}
+
+int main(){
+    string s;
+    cin>>s;
+    convert1(s);
+    cout<<s<<endl;
+    convert2(s);
+    cout<<s<<endl;
+    
+    return 0;
+}
+~~~
+
+4、函数调用，求最大公约数和最小公倍数
+
+辗转相除法
+
+~~~c++
+#include<iostream>
+using namespace std;
+
+int gcd(int x, int y){	//最大公约数
+    int t;
+    t = x % y;
+    while(t != 0){
+        x = y;	
+        y = t;
+        t = x % y;;
+    }
+    return y;
+}
+
+int lcm(int x, int y){	//最小公倍数
+    return x * y / gcd(x,y);
+}
+
+int main(){
+    int a,b;
+    cin>>a>>b;
+    
+    cout<<"最大公约数:"<<gcd(a,b)<<" "<<"最小公倍数:"<<lcm(a,b)<<endl;
+    
+    return 0;
+}
+~~~
+
+## 函数重载（多态）
+
+函数重载指多个重名函数（参数数目、类型、顺序不同）。
+
+### 实例
+
+1、建立一个函数，对于字符串类型数据取其长度的一半，对于浮点数类型，求其值的二分之一。
+
+~~~c++
+#include<iostream>
+#include<cstring>
+using namespace std;
+
+float half(float f){
+    return f / 2;
+}
+
+string half(string s){
+    int n = s.length() / 2;
+    char *str = new char[n];
+    for(int i = 0;i < n;i++){
+        str[i] = s[i];
+    }
+    return str; 
+}
+
+int main(){
+    float n;
+    string st;
+    cin>>n>>st;
+    
+    cout<<half(n)<<half(st)<<endl;
+    
+    return 0;
+}
+~~~
+
+# 五、递归
+
+结束条件
+
+## 实例
+
+1、输入n个整数，倒序输出所有整数。
+
+~~~c++
+#include<iostream>
+using namespace std;
+
+int a[1000];
+
+void print(int n){
+    cout<<a[n]<<endl;
+    if(n > 0){
+        print(n-1);
+    }
+}
+
+int main(){
+    int n;
+    cin>>n;
+    for(int i = 0;i < n;i++){
+        cin>>a[i];
+    }
+    
+    print(n-1);
+    
+    return 0;
+}
+~~~
+
 
 
 
