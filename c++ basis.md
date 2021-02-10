@@ -611,6 +611,314 @@ int main(){
     return 0;
 }
 ~~~
+# 六、数组
+
+有相同数据类型的变量集合为数组。
+
+## 定义 
+
+**一维数组**的静态定义：
+
+**类型说明符 数组名[常量表达式];**
+
+常量表达式必须为整形常量，不能是变量，数值必须为已知的数值。
+
+注意事项
+
+* 在定义时可以对数组初始化。int a[3] = {1,2,3};
+* 定义初始化时可以不指定长度 int a[] = {1,2,3,5,6};
+* 非定义时不可以整体赋值 a[3] = {1,2,3};×
+* 不可以对数组变量之间进行赋值
+* 系统不会检查下标是否有效，超出下标的值也不会报错
+
+### 一维数组的应用
+
+int a[1000000];如果放在main函数里需要分配较大的空间，会报错。需要放在main函数外，作为全局的静态数组。
+
+~~~c++
+#include<iostream>
+using namespace std;
+int main(){
+    int b[5] = {1,2,3};
+    int c[] = {1,2,3,8,45,6,46,874};
+    
+    cout<<sizeof(int)<<endl;
+    cout<<sizeof(c)<<"  "<<sizeof(b)<<endl;	//32 20。一个分配给4个字节
+    
+    for(int i = 0;i < 15;i++){
+        b[i] = i;
+    }
+    for(int i = 0;i < 15;i++){
+        cout<<b[i]<<endl;
+    }
+    
+    return 0;
+}
+~~~
+
+1、逆序输出
+
+ctrl+z回车 停止并运行。
+
+~~~c++
+#include<iostream>
+using namespace std;
+#define maxn 105
+int a[maxn];
+int main(){
+    int i = 0, x;
+    
+    while(cin>>x){
+        a[i++] = x;
+    }
+    
+    for(int j = i - 1;j >= 0;j--){
+        cout<<a[j]<<endl;
+    }
+    
+    return 0;
+}
+~~~
+
+2、数组做函数的参数
+
+#include<cstring>
+
+bool a[1005];
+
+memset(a,0,sizeof(a));将a数组里的所有内容置0
+
+输入n个学生的成绩（整数），存入数组a[]中，求总成绩和平均成绩（浮点数）
+
+~~~c++
+#include<iostream>
+using namespace std;
+
+int a[105];
+
+int add(int a[],int n){	//其实就是a[n]
+    int sum = 0;
+    for(int i = 0;i < n;i++){
+        sum += a[i];
+    }
+    return sum;
+}
+
+int main(){
+    int n,s;
+    float avg;
+    
+    cin>>n;
+    for(int i = 0;i < n;i++){
+        cin>>a[i];
+    }
+    s = add(a,n);	//注意，传递参数的时候只需要数组名即可，add(a[],n) ×
+    avg = float(s) / n;
+    
+    cout<<s<<" "<<avg<<endl;
+    
+    return 0;
+}
+~~~
+
+一维数组的动态定义
+
+类型说明符 *数组名 = new 类型名[常量或变量表达式];
+
+使用<b>new分配的数组，使用完毕需要用delete释放空间。</b>
+
+delete []数组名
+
+
+
+### 动态数组的应用
+
+ 统计不及格的人数
+
+~~~c++
+#include<iostream>
+using namespace std;
+
+int count(int a[],int n){
+    int sum = 0;
+    for(int i = 0;i < n;i++){
+        if(a[i] < 60)
+            sum++;
+    }
+    return sum;
+}
+
+int main(){
+    int n,s;
+    cin>>n;
+    
+    int *a = new int[n];
+    
+    for(int i = 0;i < n;i++){
+        cin>>a[i];
+    }
+    
+    s = count(a,n);
+    cout<<s<<endl;
+    
+    delete []a;	//释放空间
+    
+    return 0; 
+}
+~~~
+
+## 二维数组
+
+类似一维数组
+
+二维数组做参数时，第一维可以省略，第二位不能省略。
+
+# 七、字符串与字符串
+
+字符串：存储在内存的连续字节中的一系列字符。
+
+## c风格字符串定义
+
+最后一个是\0表示字符串，否则是字符数组
+
+数组或字符串长度
+
+sizeof()、strlen()
+
+sizeof()返回所占总空间的字节数。-针对整型字符型数组或字符型指针
+
+strlen()返回字符数组或字符串所占的字节数
+
+sizeof不能返回动态分配的内存空间的大小
+
+ ~~~c++
+#include<iostream>
+#include<cstring>
+using namespace std;
+
+int main(){
+    char s1[100];
+    char s2[20] = "hello";
+    char s3[3] = {'a','b','c'};
+    char s4 = 'n';
+    
+    cin>>s1;	//cin 遇见空格会停止
+    cout<<strlen(s1)<<endl;
+    cout<<s1<<endl;
+    
+    s1[5] = '\0';
+    cout<<s1<<endl;
+    
+    return 0;
+}
+ ~~~
+
+cin使用空格、制表符、换行符来确定字符串的结束位置，因此字符串只能接受一个大那次，换行符保留在输入序列中。
+
+getline（）:读取一行，知道遇到换行符，丢弃换行符
+
+get()读取一行，直到遇到换行符，保留换行符.再调用一次
+
+~~~c++
+#include<iostream>
+#include<cstring>//c-风格字符串 头文件 
+#include<string>//string对象字符串 头文件 
+using namespace std;
+const int maxsize=100;
+int main()
+{
+	char s1[maxsize],s2[maxsize],s3[maxsize],s4[maxsize];
+	string str1,str2;
+//	cin.getline(s1,maxsize);
+//	cout<<strlen(s1)<<endl;
+//	cout<<s1<<endl;
+//	cin.getline(s2,maxsize);
+//	cout<<strlen(s2)<<endl;
+//  cout<<s2<<endl;
+//    cin.get(s3,maxsize).get();
+//    cout<<s3<<endl;
+//    cin.get(s4,maxsize);
+//    cout<<s4<<endl;
+//    cin>>s3;
+//    cout<<s3<<endl;
+//    cin.get();
+//    cin.getline(s4,maxsize);
+//    cout<<s4<<endl;
+ 	//cin>>str1;//只读一个单词 
+    //cout<<str1<<endl;
+    //cin>>str2;//只读一个单词 
+    //cin.get();
+	getline(cin,str2);//会读换行符 
+    cout<<str2<<endl;
+    getline(cin,str1);//会读换行符 
+    cout<<str1<<endl;
+    return 0;
+}
+~~~
+
+## 应用
+
+
+
+~~~c++
+#include<iostream>
+#include<string>
+using namespace std;
+
+int count1(string s)
+{
+	int len,i=0,num=0;
+	len=s.length();
+	while(i<len)
+	{
+		while(s[i]==' ')//跳过多个空格 
+			i++;
+		if(i<len)
+			num++;
+		while(s[i]!=' '&&i<len)//跳过一个单词 
+			i++;
+	}
+	return num; 
+ } 
+ 
+int count2(string s)
+{
+	int len,i=0,num=0;
+	len=s.length();
+	char c=' ';
+	while(i<len)
+	{
+		i=s.find(c,i);
+		//cout<<i<<endl;
+		if(i>=0&&i<len)
+		{
+			if(s[i+1]!=c)
+				num++;
+			i++;
+		}
+		else
+			break;		
+	}
+	return num; 
+ } 
+ 
+int main()
+{
+	string s1;
+	getline(cin,s1);
+	cout<<count2(s1)<<endl;
+    return 0;
+}
+~~~
+
+
+
+
+
+
+
+
+
 
 
 
