@@ -7,6 +7,7 @@
  */
 
 /*
+涉及到链表的操作，最好先在纸上画出步骤，再写程序
 题目要求反转链表，通常的解决方法是定义pre、cur、nex三个指针，然后改变指向完成反转
 */
 
@@ -18,7 +19,7 @@ struct ListNode* reverseList(struct ListNode* head){
 
     while(p){
         nex = p->next; //定义一个nex指针，用于遍历整个链表
-        p->next = pre;
+        p->next = pre;  //完成局部反转
         pre = p;
         p = nex;  //用于最后空结点的判断
     }
