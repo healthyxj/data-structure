@@ -21,7 +21,7 @@ int arr[MaxSize];
 
 int main(){
     int m, n, k;
-    scanf("%m%n%k", &m, &n, &k);
+    scanf("%d%d%d", &m, &n, &k);
   
     while(k--){
         while(!st.empty()){  //判断栈是否为空，如果为空，就不断弹出栈中元素
