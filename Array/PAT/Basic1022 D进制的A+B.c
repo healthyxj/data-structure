@@ -13,7 +13,7 @@ int main(){
     int sum = a + b;
     int tmp = 0;
     
-    if(sum == 0){
+    if(sum == 0){	//需要判断和是否为0
         printf("0\n");
     }else{
 	    while(sum != 0){
