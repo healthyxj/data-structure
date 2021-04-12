@@ -13,7 +13,7 @@ int main(){
     int len = strlen(a); //用len记录读入字符的长度
     int i = 0;
     
-    for(i = 0; i < len; i++){
+    for(i = 0; i < len; i++){   
         if(a[i] != ' '){
             word[r][c++] = a[i];
         }else{
@@ -23,9 +23,9 @@ int main(){
         }
     }
     
-    for(i = r; i >=0; i--){
+    for(i = r; i >=0; i--){ //用r来作为输出条件
         printf("%s", word[i]);	//因为是输出一整个维度，需要用string类型
-        if(i > 0) printf(" ");	
+        if(i > 0) printf(" ");	    //空格在最后输出的时候处理
     }
     
     
